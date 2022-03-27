@@ -10,12 +10,11 @@ class RegisterController extends Controller
 {
     public function register(Request $request){
 
-        $request
-        ->validate([
+        $request->validate([
                 'name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
                 'password' => 'min:8|required_with:password_confirmation|same:password_confirmation',
-		'password_confirmation' => 'min:8'
+		        'password_confirmation' => 'min:8'
             ],[
                 'name.required' => 'Usuario requerido.',
                 'name.string' => 'Usuario invalido.',

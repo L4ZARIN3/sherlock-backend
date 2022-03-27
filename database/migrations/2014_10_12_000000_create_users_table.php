@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->dateTime('plano')->default('2021-03-25 04:04:12');
             $table->rememberToken();
             $table->timestamps();
         });
