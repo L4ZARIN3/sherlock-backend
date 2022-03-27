@@ -40,17 +40,13 @@ class BigDataCorpController extends Controller
         $retorno = $this->req($chave, $dataset, $type);
         
         if($retorno['Status']['basic_data'][0]['Code'] == '-114'){
-            if ($request->type == 'html') {
-                return view('null');
-            } elseif ($request->type == 'json') {
+            if($request->type == 'json') {
                 return response()->json(['status' => 'error', 'msg' => 'Busca nao retornou nenhum resultado.'], 422);
             }
             exit();
         }
 
-        if ($request->type == 'html') {
-            return view('bdc', compact('retorno'));
-        } elseif ($request->type == 'json') {
+        if ($request->type == 'json') {
             return $retorno;
         }else{
             return response()->json(['status' => 'error', 'msg' => 'Informe o type do response.'], 422);
