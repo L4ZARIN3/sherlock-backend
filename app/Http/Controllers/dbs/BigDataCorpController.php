@@ -73,26 +73,20 @@ class BigDataCorpController extends Controller
         $retorno = $this->req($chave, $dataset, $type);
 
         if($retorno['Status']['doc_finder'][0]['Code'] == '-130'){
-            if ($request->type == 'html') {
-                return view('longresult');
-            } elseif ($request->type == 'json') {
+            if ($request->type == 'json') {
                 return response()->json(['status' => 'error', 'msg' => 'Busca retornou muitos resultados, adicione mais parametros a sua pesquisa.'], 422);
             }
             exit();
         }
 
         if(!array_key_exists('0', $retorno['Result']) ){
-            if ($request->type == 'html') {
-                return view('null');
-            } elseif ($request->type == 'json') {
+            if($request->type == 'json') {
                 return response()->json(['status' => 'error', 'msg' => 'Busca nao retornou nenhum resultado.'], 422);
             }
             exit();
         }
 
-        if($request->type == 'html'){
-            return view('bdc', compact('retorno'));
-        }elseif($request->type == 'json'){
+        if($request->type == 'json'){
             return $retorno;
         }else{
             return response()->json(['status' => 'error', 'msg' => 'Informe o type do response.'], 422);
@@ -109,17 +103,13 @@ class BigDataCorpController extends Controller
         $retorno = $this->req($chave, $dataset, $type);
 
         if(!array_key_exists('0', $retorno['Result'])){
-            if ($request->type == 'html') {
-                return view('null');
-            } elseif ($request->type == 'json') {
+            if($request->type == 'json') {
                 return response()->json(['status' => 'error', 'msg' => 'Busca nao retornou nenhum resultado.'], 422);
             }
             exit();
         }
 
-        if ($request->type == 'html') {
-            return view('bdc', compact('retorno'));
-        } elseif ($request->type == 'json') {
+        if($request->type == 'json') {
             return $retorno;
         }else{
             return response()->json(['status' => 'error', 'msg' => 'Informe o type do response.'], 422);
@@ -134,18 +124,14 @@ class BigDataCorpController extends Controller
         $retorno = $this->req($chave, $dataset, $type);
 
         if(!array_key_exists('0', $retorno['Result']) ){
-            if ($request->type == 'html') {
-                return view('null');
-            } elseif ($request->type == 'json') {
+            if($request->type == 'json') {
                 return response()->json(['status' => 'error', 'msg' => 'Busca nao retornou nenhum resultado.'], 422);
             }
             exit();
         }
 
 
-        if ($request->type == 'html') {
-            return view('bdc', compact('retorno'));
-        } elseif ($request->type == 'json') {
+        if($request->type == 'json') {
             return $retorno;
         }else{
             return response()->json(['status' => 'error', 'msg' => 'Informe o type do response.'], 422);
@@ -161,9 +147,7 @@ class BigDataCorpController extends Controller
         $retorno = $this->req($chave, $dataset, $type);
 
         if(!array_key_exists('0', $retorno['Result'][0]['LicensePlateData']['VehicleInfo'])){
-            if ($request->type == 'html') {
-                return view('null');
-            } elseif ($request->type == 'json') {
+            if($request->type == 'json') {
                 return response()->json(['status' => 'error', 'msg' => 'Busca nao retornou nenhum resultado.'], 422);
             }
 
@@ -172,9 +156,7 @@ class BigDataCorpController extends Controller
 
 
         if($retorno['Status']['license_plates'][0]['Code'] == '-145'){
-            if ($request->type == 'html') {
-                return view('null');
-            } elseif ($request->type == 'json') {
+            if($request->type == 'json') {
                 return response()->json(['status' => 'error', 'msg' => 'Busca nao retornou nenhum resultado.'], 422);
             }
 
@@ -182,9 +164,7 @@ class BigDataCorpController extends Controller
         }
 
 
-        if ($request->type == 'html') {
-            return view('bdcVeiculo', compact('retorno'));
-        } elseif ($request->type == 'json') {
+        if($request->type == 'json') {
             return $retorno;
         }else{
             return response()->json(['status' => 'error', 'msg' => 'Informe o type do response.'], 422);
