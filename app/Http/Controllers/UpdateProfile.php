@@ -15,8 +15,8 @@ class UpdateProfile extends Controller
     public function update(Request $request){
         $request->validate([
             'email' => 'required|string|email|max:255',
-            'password' => 'min:8|required_with:password_confirmation|same:password_confirmation',
-            'password_confirmation' => 'required|min:8'
+            'password' => 'nullable|min:8|required_with:password_confirmation|same:password_confirmation',
+            'password_confirmation' => 'nullable|min:8'
         ],[
             'email.required' => 'Email requerido.',
             'email.string' => 'Email invalido.',
@@ -24,7 +24,7 @@ class UpdateProfile extends Controller
             'email.max' => 'Maximo de 255 caracteres para Email.',
             'email.unique' => 'Email ja está em uso.',
 
-            'password.min' => 'Minimo de 8 caracteres para email.',
+            'password.min' => 'Minimo de 8 caracteres para senha.',
             'password.required_with' => 'Informe a confirmação de senha.',
             'password.same' => 'Confirmação de senha invalida.',
 
@@ -39,7 +39,6 @@ class UpdateProfile extends Controller
             if($id->id == $usuario->id){
                 User::find($id->id)->update([
                     'email' => $request->email,
-                    'password' => Hash::make($request->password)
                 ]);
             }else{
                 return response()->json(['error' => 'Email ja em uso'], 401);
@@ -47,9 +46,15 @@ class UpdateProfile extends Controller
         }else{
             User::find($id->id)->update([
                 'email' => $request->email,
+            ]);
+        }
+
+        if(!empty($request->password)){
+            User::find($id->id)->update([
                 'password' => Hash::make($request->password)
             ]);
         }
+        
         return response()->json(['message' => 'Informações alteradas com sucesso'], 200);
 
 
